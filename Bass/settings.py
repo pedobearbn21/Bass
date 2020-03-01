@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Bass.apps.web'
+    'rest_framework',
+    'Bass.apps.web',
+    'Bass.apps.api'
 ]
 
 MIDDLEWARE = [
