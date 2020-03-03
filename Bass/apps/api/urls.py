@@ -20,5 +20,6 @@ from rest_framework import routers, serializers
 from Bass.apps.api import views
 
 urlpatterns = [
-    url(r'^Postlist', views.PostList.as_view())
+    url(r'^Postlist', views.PostList.as_view()),
+    url(r'^Commentlist', views.CommentList.as_view())
 ]
