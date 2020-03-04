@@ -10,9 +10,28 @@ class PostList(generics.ListCreateAPIView) :
     # Comments
     # Look Up for the way to get comment in formPost
     queryset = Post.objects.all()
+    # def get_queryset(self):
+    #     b =  list(Post.objects.all())
+    #     for i in b:
+    #         i.comment = []
+    #         a = list(Comment.objects.filter(post = i))
+    #         for j in a:
+    #             i.comment.append(j)
+    #     return b
+    
 
-    serializer_class  = PostSerializer
+    serializer_class = PostSerializer
+
+class Postrud(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    lookup_field = 'id'
+    serializer_class = PostSerializer
 
 class CommentList(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+class Commentrud(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    lookup_field = 'id'
     serializer_class = CommentSerializer

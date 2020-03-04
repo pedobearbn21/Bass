@@ -20,7 +20,6 @@ class Post(models.Model):
 class CommentABS(models.Model):
     # userid = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(default='')
-    post = models.ForeignKey(Post ,on_delete=models.CASCADE)
     video = models.TextField(blank=True)
     price = models.DecimalField(max_digits=19, decimal_places=2 )
     at_time = models.DateTimeField(default=datetime.now)
@@ -31,6 +30,7 @@ class CommentABS(models.Model):
 
 class Comment(CommentABS):
     # userid = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post , related_name='comment',on_delete=models.CASCADE)
 
     def __str__(self):
         return 'Pid: {} ,Ptitle: {}'.format(self.post.id,self.post.title)
