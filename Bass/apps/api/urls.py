@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-# from django.conf.urls import url, include
+from django.conf.urls import url, include
 from rest_framework import routers, serializers
 from Bass.apps.api import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
+    path('test/', views.HelloView.as_view()),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'), 
     path('Postlist', views.PostList.as_view()),
     path('Postlist/<int:id>', views.Postrud.as_view()),
     path('Commentlist', views.CommentList.as_view()),
