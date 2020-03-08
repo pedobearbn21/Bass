@@ -21,7 +21,6 @@ from Bass.apps.api import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('test/', views.HelloView.as_view()),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'), 

@@ -3,11 +3,6 @@ from datetime import datetime
 
 # Create your models here.
 
-
-class User(models.Model):
-    Username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-
 class Post(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
