@@ -53,6 +53,8 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER ': 'Bass.api.serializers.UserDetailsSerializer',
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 SITE_ID = 1
 
