@@ -7,10 +7,11 @@ from datetime import datetime
 
 class Payment(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='payment' )
-    price = models.IntegerField()
+    price = models.IntegerField(default=0)
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='post', default=1)
     description = models.TextField()
     status_type = (
     (1, 1),
@@ -27,7 +28,7 @@ class CommentABS(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['at_time']
+        ordering = ['-at_time']
 
 class Comment(CommentABS):
     # userid = models.ForeignKey(User, on_delete=models.CASCADE)
