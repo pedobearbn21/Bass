@@ -29,5 +29,5 @@ urlpatterns = [
     path('Postlist/<int:id>', views.Postrud.as_view()),
     path('Commentlist', views.CommentList.as_view()),
     path('Commentlist/<int:id>', views.Commentrud.as_view()),
-    path('Topup/<int:id>/<int:used>', views.Topup)
+    path('Topup/<int:id>/used/<int:used>', views.Topup)
 ]

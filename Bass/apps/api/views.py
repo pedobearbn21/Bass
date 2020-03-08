@@ -24,7 +24,7 @@ def Topup(request,id,used):
         Pay = Payment.objects.get(user_id = id)
         Pay.price = Pay.price - used
         if(Pay.price < 0):
-            return HttpResponse(Pay, content_type="text/json")
+            return HttpResponse('Not Enough', content_type="text/json")
         else :
             Pay.save()
             return HttpResponse(Pay, content_type="text/json")
