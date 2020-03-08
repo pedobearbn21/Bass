@@ -49,6 +49,11 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 ]
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER ': 'Bass.api.serializers.UserDetailsSerializer',
+}
+
+
 SITE_ID = 1
 
 MIDDLEWARE = [

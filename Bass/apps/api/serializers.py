@@ -1,7 +1,23 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.core.serializers import serialize
-from Bass.apps.web.models import Post, Comment, StackComment
+from Bass.apps.web.models import Post, Comment, StackComment, Payment
+# GET Model User
+UserModel = get_user_model()
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    payments = serializers.SerializerMethodField('get_pay')
+    def get_pay(self, obj):
+        data = Payment.objects.filter(user = obj)[0]
+        return data.price
+
+    class Meta:
+        model = UserModel
+        fields = ('pk', 'username', 'email','payments')
+        read_only_fields = ('email', )
+
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -15,11 +31,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     comment = CommentSerializer(many=True, read_only=True)
-
-    # def get_comment(self, obj):
-        # return  serialize('json', Comment.objects.filter(post = obj))
-        # return obj.comment_set.filter(post = obj)
     class Meta:
         model = Post
         fields = ['id','title', 'description','status','comment']
-        # fields = '__all__'

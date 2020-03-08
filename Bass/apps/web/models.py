@@ -1,7 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import datetime
 
 # Create your models here.
+
+
+class Payment(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='payment' )
+    price = models.IntegerField()
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
