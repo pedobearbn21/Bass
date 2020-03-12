@@ -3,11 +3,12 @@ from django.views import View
 from django.http import JsonResponse,HttpResponse
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import get_user_model
-# from rest_framework.viewsets import ModelViewSet
-from Bass.apps.web.models import Post, Comment, StackComment, Payment
-from Bass.apps.api.serializers import PostSerializer, CommentSerializer, UserDetailsSerializer, PaymentSerializer
-
+from django.contrib.auth import get_user_model,authenticate,login
+from Bass.apps.web.models import Post, Comment, WareHouse, Payment
+from Bass.apps.api.serializers import PostSerializer, CommentSerializer, UserDetailsSerializer, PaymentSerializer, WareHouseSerializer
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+from rest_framework.views import APIView
 
 # User Detail with Post
 class UserDetailsView(generics.RetrieveUpdateAPIView):
@@ -20,14 +21,17 @@ class UserDetailsView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return get_user_model().objects.none()
 
+# class UserTest(View):
+def UserTest(request, username, password):
+    user =  UserModel.objects.get(username=username,password=password)
+    return HttpResponse(user, content_type="text/json")
+    serializer_class = UserDetailsSerializer
+
 def Topup(request,id,used):
         Pay = Payment.objects.get(user_id = id)
-        Pay.price = Pay.price - used
-        if(Pay.price < 0):
-            return HttpResponse('Not Enough', content_type="text/json")
-        else :
-            Pay.save()
-            return HttpResponse(Pay, content_type="text/json")
+        Pay.user.username = 'TestChange'
+        Pay.save()
+        return HttpResponse(Pay.user, content_type="text/json")
     
 
 # Random Control on Homepage
@@ -51,5 +55,29 @@ class CommentList(generics.ListCreateAPIView):
 
 class Commentrud(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
+    lookup_field = 'id'
+    serializer_class = CommentSerializer
+
+class Shopcart(generics.ListCreateAPIView):
+    
+    # def post(self, *args, **kwargs):
+    #     # Pay = Payment.objects.get(user_id = self.request.userid)
+    #     WareHouse = WareHouse(
+    #                     content=self.request.content,
+    #                     video=self.request.video,
+    #                     price=self.request.price,
+    #                     user=self.request.userid
+    #                 )
+    #     if(WareHouse.save()):
+    #         # Pay.price - self.request.price
+    #         # Pay.save()
+    #         return 'Success'
+    #     else:
+    #         return 'Failed'
+    queryset = WareHouse.objects.all()
+    serializer_class = WareHouseSerializer
+
+class Shopcartrud(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WareHouse.objects.all()
     lookup_field = 'id'
     serializer_class = CommentSerializer
