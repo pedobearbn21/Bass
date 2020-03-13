@@ -39,5 +39,8 @@ urlpatterns = [
     # Shopping
         path('Shopcart', views.Shopcart.as_view()),
         path('Shopcart/<int:id>', views.Shopcartrud.as_view()),
-        path('Topup/<int:id>/used/<int:used>', views.Topup)
+        path('Topup/<int:id>/income/<int:income>', views.Topup),
+        path('Paid/<int:id>/cost/<int:cost>', views.Paid),
+    # Test API
+        path('ch/', views.ch)
 ]
