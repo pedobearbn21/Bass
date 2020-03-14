@@ -61,6 +61,9 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         fields = ('pk', 'username', 'email','payments','post', 'warehouse')
         read_only_fields = ('email', )
 
+# Bad Smell
+# มีการประกาศไว้แต่ยังไม่ได้เรัยกใช้
+
 class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
