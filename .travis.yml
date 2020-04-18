@@ -1,10 +1,25 @@
-language: python
-python:
-  - "3.7"
-  - "nightly"  # nightly build
-# command to install dependencies
-install:
-  - pip install -r requirements.txt
-# command to run tests
-script:
-  - py manage.py runserver
+language: python # => 1
+    python: # => 2
+      - "3.7"
+    services: # => 3
+      - mysql
+    env: # => 4
+      -DJANGO=3.0 DB=mysql
+    install: # => 5
+      - pip install -r requirements.txt
+    before_script: # => 6
+      - mysql -e 'create database test;' -u root
+      - python manage.py sqlmigrate web 0001_initial
+      - python manage.py sqlmigrate web 0002_paymentss
+      - python manage.py sqlmigrate web 0003_auto_20200308_1118
+      - python manage.py sqlmigrate web 0004_auto_20200308_1136
+      - python manage.py sqlmigrate web 0006_auto_20200308_1304
+      - python manage.py sqlmigrate web 0007_auto_20200308_1306
+      - python manage.py sqlmigrate web 0008_auto_20200308_1310
+      - python manage.py sqlmigrate web 0009_auto_20200308_1311
+      - python manage.py sqlmigrate web 0010_auto_20200308_1317
+      - python manage.py sqlmigrate web 0011_auto_20200308_1318
+      - python manage.py sqlmigrate web 0012_auto_20200312_1738
+      - python manage.py sqlmigrate web 0013_comment_user
+    script: # => 7
+      - python manage.py test
