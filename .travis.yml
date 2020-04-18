@@ -1,26 +1,26 @@
 language: python
-    python:
-      - "3.6"
-      - "3.7"
-    services: 
-      - mysql
-    env:
-      -DJANGO=3 DB=mysql
-    install:
-      - pip install -r requirements.txt
-    before_script: 
-      - mysql -e 'create database test;' -u root
-      - python manage.py sqlmigrate web 0001_initial
-      - python manage.py sqlmigrate web 0002_paymentss
-      - python manage.py sqlmigrate web 0003_auto_20200308_1118
-      - python manage.py sqlmigrate web 0004_auto_20200308_1136
-      - python manage.py sqlmigrate web 0006_auto_20200308_1304
-      - python manage.py sqlmigrate web 0007_auto_20200308_1306
-      - python manage.py sqlmigrate web 0008_auto_20200308_1310
-      - python manage.py sqlmigrate web 0009_auto_20200308_1311
-      - python manage.py sqlmigrate web 0010_auto_20200308_1317
-      - python manage.py sqlmigrate web 0011_auto_20200308_1318
-      - python manage.py sqlmigrate web 0012_auto_20200312_1738
-      - python manage.py sqlmigrate web 0013_comment_user
-    script: 
-      - python manage.py test
+
+python:
+  - 2.6
+  - 2.7
+
+services: postgresql
+
+env:
+  - DJANGO=3.0.4
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=Bass.settings
+  - export PYTHONPATH=$HOME/builds/pedobearbn21/Bass
+  - export PIP_USE_MIRRORS=true
+
+install:
+  - pip install -r requirements.txt
+  - pip install django==$DJANGO --quiet
+  - pip install psycopg2 --quiet
+
+before_script:
+  - psql -c "CREATE DATABASE mydb;" -U postgres
+
+script:
+  - python manage.py syncdb --noinput
