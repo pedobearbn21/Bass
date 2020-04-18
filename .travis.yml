@@ -1,14 +1,13 @@
-language: python # => 1
-
-    python: # => 2
+language: python
+    python:
       - "3.7"
-    services: # => 3
+    services: 
       - mysql
     env: # => 4
       -DJANGO=3.0 DB=mysql
-    install: # => 5
+    install:
       - pip install -r requirements.txt
-    before_script: # => 6
+    before_script: 
       - mysql -e 'create database test;' -u root
       - python manage.py sqlmigrate web 0001_initial
       - python manage.py sqlmigrate web 0002_paymentss
@@ -22,5 +21,5 @@ language: python # => 1
       - python manage.py sqlmigrate web 0011_auto_20200308_1318
       - python manage.py sqlmigrate web 0012_auto_20200312_1738
       - python manage.py sqlmigrate web 0013_comment_user
-    script: # => 7
+    script: 
       - python manage.py test
